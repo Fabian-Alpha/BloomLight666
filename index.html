@@ -1,0 +1,543 @@
+<html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BloomLight: Velas artesanales que iluminan momentos. Descubre nuestros productos únicos y hechos a mano.">
+    <title>BloomLight - Velas Artesanales</title>
+    <!-- Google Fonts para tipografía legible -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Variables de color para consistencia */
+        :root {
+            --color-primario: #f5f5dc; /* Beige suave */
+            --color-secundario: #e8f5e8; /* Verde claro */
+            --color-texto: #333;
+            --color-borde: #ddd;
+            --color-hover: #c8e6c9;
+            --color-modal-bg: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--color-texto);
+            background-color: var(--color-primario);
+            scroll-behavior: smooth; /* Scroll suave */
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: var(--color-secundario); /* Placeholder */
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .carrito {
+            position: relative;
+        }
+
+        .carrito-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .carrito-contador {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff5722;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        /* Sección Inicio */
+        #inicio {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(to bottom, var(--color-secundario), white);
+        }
+
+        #inicio h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #8B4513; /* Color marrón cálido para el título */
+        }
+
+        #inicio p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--color-secundario);
+            color: var(--color-texto);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-hover);
+        }
+
+        /* Sección Quiénes Somos */
+        #quienes-somos {
+            padding: 50px 20px;
+            background-color: white;
+            text-align: center;
+        }
+
+        #quienes-somos h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        #quienes-somos p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* Sección Productos */
+        #productos {
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #productos h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .producto {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-5px);
+        }
+
+        .producto img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .producto-content {
+            padding: 20px;
+        }
+
+        .producto h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .producto p {
+            margin-bottom: 10px;
+        }
+
+        .precio {
+            font-weight: 700;
+            color: #ff5722;
+        }
+
+        .mas-vendido {
+            background-color: #fff3cd;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .producto-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Modal para detalles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sección Misión y Visión */
+        #mision-vision {
+            padding: 50px 20px;
+            background-color: white;
+            text-align: center;
+        }
+
+        #mision-vision h2 {
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .mision-vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mision-vision-item {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: var(--color-secundario);
+        }
+
+        /* Sección Contacto */
+        #contacto {
+            padding: 50px 20px;
+            background-color: var(--color-primario);
+        }
+
+        #contacto h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .contacto-content {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid var(--color-borde);
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .contacto-info {
+            text-align: center;
+        }
+
+        .contacto-info p {
+            margin-bottom: 10px;
+        }
+
+        .redes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .redes div, .redes a {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-secundario);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .redes div:hover, .redes a:hover {
+            background-color: var(--color-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: white;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--color-borde);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contacto-content {
+                grid-template-columns: 1fr;
+            }
+
+            #inicio h2 {
+                font-size: 2rem;
+            }
+
+            .productos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+          <img src="images/lg.png" alt="Logo BloomLight">
+            <h1>BloomLight</h1>
+        </div>
+        <div class="carrito">
+            <span class="carrito-icon">🛒</span>
+            <span class="carrito-contador" id="carrito-contador">0</span>
+        </div>
+    </header>
+
+    <!-- Sección Inicio -->
+    <section id="inicio">
+        <h2>Velas artesanales que iluminan momentos</h2>
+        <p>Descubre nuestras velas hechas a mano con ingredientes naturales.</p>
+        <button class="btn" onclick="scrollToSection('productos')">Ver Productos</button>
+    </section>
+
+    <!-- Sección Quiénes Somos -->
+    <section id="quienes-somos">
+        <h2>Quiénes Somos</h2>
+        <p>Bloomlight es una empresa dedicada a la creacion de velas innovadoras, con diseños originales, formas unicas y aromas que transforman cualquier espacio en una experiencia sensorial.</p>
+    </section>
+
+    <!-- Sección Productos -->
+    <section id="productos">
+        <h2>Nuestros Productos</h2>
+        <div class="productos-grid">
+            <div class="producto">
+            <img src="images/cafe.jpg" alt="Vela Taza de Café">
+                <div class="producto-content">
+                    <span class="mas-vendido">Más Vendida</span>
+                    <h3>Vela de café</h3>
+                    <p>Una vela aromática en forma de taza de café, perfecta para relajarse.</p>
+                    <p class="precio">$17.000</p>
+                    <div class="producto-buttons">
+                        <button class="btn" onclick="agregarAlCarrito()">Agregar al Carrito</button>
+                        <button class="btn" onclick="mostrarModal()">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+            <div class="producto">
+             <img src="images/espiral.jpg" alt="Vela Espiral">
+                <div class="producto-content">
+                    <h3>Vela espiral</h3>
+                    <p>Diseño en espiral con fragancias frescas y duraderas.</p>
+                    <p class="precio">$15.000</p>
+                    <div class="producto-buttons">
+                        <button class="btn" onclick="agregarAlCarrito()">Agregar al Carrito</button>
+                        <button class="btn" onclick="alert('Detalles no disponibles')">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+            <div class="producto">
+             <img src="images/agua.jpg" alt="Vela Mitad Agua">
+                <div class="producto-content">
+                    <h3>Vela de agua</h3>
+                    <p>Efecto visual único con agua y cera, ideal para decoración.</p>
+                    <p class="precio">$19.000</p>
+                    <div class="producto-buttons">
+                        <button class="btn" onclick="agregarAlCarrito()">Agregar al Carrito</button>
+                        <button class="btn" onclick="alert('Detalles no disponibles')">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para detalles de la vela Taza de Café -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h3>Detalles de la Vela de café</h3>
+            <p><strong>Materiales usados:</strong> Cera de soja, aceites esenciales de vainilla y café, mecha de algodón.</p>
+            <p><strong>Paso a paso:</strong></p>
+            <ol>
+                <li>Preparar el molde en forma de taza.</li>
+                <li>Derretir la cera y agregar fragancias.</li>
+                <li>Verter en el molde y colocar la mecha.</li>
+                <li>Dejar enfriar y decorar.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Sección Misión y Visión -->
+    <section id="mision-vision">
+        <h2>Misión y Visión</h2>
+        <div class="mision-vision-grid">
+            <div class="mision-vision-item">
+                <h3>Misión</h3>
+                <p>Dar vida a ideas creativas mediante la elaboracion de velas artesanales que despierten los sentidos, exploren el diseño y reflejen la personalidad del equipo</p>
+            </div>
+            <div class="mision-vision-item">
+                <h3>Visión</h3>
+                <p>Ser una marca reconocida por la originalidad, calidad y diseño artesanal de nuestras velas, despertando curiosidad e interes a traves de diseños innovadores y aromas unicos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto">
+        <h2>Contacto</h2>
+        <div class="contacto-content">
+            <form id="contact-form">
+                <input type="text" id="nombre" placeholder="Nombre" required>
+                <input type="email" id="correo" placeholder="Correo electrónico" required>
+                <textarea id="mensaje" placeholder="Mensaje" rows="5" required></textarea>
+                <button type="submit" class="btn">Enviar</button>
+            </form>
+            <div class="contacto-info">
+                <p><strong>Gerente:</strong> Karol Salazar</p>
+                <p><strong>Direccion:</strong> El Mega</p>
+                <p><strong>Email:</strong> Johanjoannys11@gmail.com</p>
+                <p><strong>Teléfono:</strong> +57 310 4828557</p>
+                <div class="redes">
+                    <a href="https://www.instagram.com/bloomlight09?igsh=cnRneXR3OTUwdXJx" target="_blank">📘</a> <!-- Facebook -->
+                    <a href="https://www.instagram.com/bloomlight09?igsh=cnRneXR3OTUwdXJx" target="_blank">📷</a> <!-- Instagram -->
+                    <a href="https://www.instagram.com/bloomlight09?igsh=cnRneXR3OTUwdXJx" target="_blank">🐦</a> <!-- Tik Tok -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p id="footer-text">BloomLight © <span id="year"></span> Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Variables globales
+        let carritoContador = 0;
+
+        // Función para agregar al carrito
+        function agregarAlCarrito() {
+            carritoContador++;
+            document.getElementById('carrito-contador').textContent = carritoContador;
+            alert('Producto agregado al carrito!');
+        }
+
+        // Función para mostrar modal
+        function mostrarModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        // Función para cerrar modal
+        function cerrarModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Función para scroll suave a sección
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Validación básica del formulario
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value.trim();
+            const correo = document.getElementById('correo').value.trim();
+            const mensaje = document.getElementById('mensaje').value.trim();
+
+            if (nombre && correo && mensaje) {
+                alert('Mensaje enviado exitosamente!');
+                this.reset();
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        });
+
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        // Establecer año actual en footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
